@@ -19,10 +19,10 @@
 
 
 def add_person():
-    last_name = input('Введите фамилию: ') # 'Иванов'
-    name = input('Введите имя: ') # 'Иван'
-    surname = input('Введите отчество: ') # 'Иванович'
-    phone = input('Введите номер телефона: ') # '123456'
+    last_name = input('Введите фамилию: ')
+    name = input('Введите имя: ') 
+    surname = input('Введите отчество: ') 
+    phone = input('Введите номер телефона: ') 
     data = open('C:\\Users\\Uber\\Desktop\\Sem8\\file\\phonebook.txt', 'a', encoding='UTF-8')
     data.writelines([last_name, ' ',  name, ' ', surname, ' ', phone, '\n'])
     data.close()
@@ -51,12 +51,43 @@ def load_data():
                     data.write(line)
 # load_data()
 
+def del_person():
+    del_name = input('Введите контакт, который нужно удалить: ')
+    with open('C:\\Users\\Uber\\Desktop\\Sem8\\file\\phonebook.txt', 'r', encoding='UTF-8') as data:
+        d = data.readlines()
+        for i_line in range(len(d)):
+            if del_name in d[i_line]:
+                del d[i_line]
+    with open('C:\\Users\\Uber\\Desktop\\Sem8\\file\\phonebook.txt', 'w', encoding='UTF-8') as data:
+        for line in d:
+            data.write(line)
+            
+def change_person():
+    change_name = input('Введите данные контакта, который хотите изменить: ')
+    last_name = input('Введите новую фамилию: ') 
+    name = input('Введите новое имя: ') 
+    surname = input('Введите новое отчество: ') 
+    phone = input('Введите новый номер телефона: ')
+    
+    with open('C:\\Users\\Uber\\Desktop\\Sem8\\file\\phonebook.txt', 'r', encoding='UTF-8') as data:
+        d = data.readlines()
+    for i_line in range(len(d)):
+        if change_name in d[i_line]:
+            d[i_line] = last_name + ' ' + name + ' ' + surname + ' ' + phone + ' '
+    
+    with open('C:\\Users\\Uber\\Desktop\\Sem8\\file\\phonebook.txt', 'w', encoding='UTF-8') as data:
+        for line in d:
+            data.write(line)
+
 def ui():
     print('''
     1 - Добавить контакт
     2 - Поиск
     3 - Импорт данных
-    4 - Вывод в консоль''')
+    4 - Вывод в консоль
+    5 - Удалить контакт
+    6 - Изменить контакт
+    ''')
     user_input = input('Введите действие: ')
     if user_input == '1':
         add_person()
@@ -66,6 +97,11 @@ def ui():
         load_data()
     elif user_input == '4':
         print_data()
+    elif user_input == '5':
+        del_person()
+    elif user_input == '6':
+        change_person()
+
 def main():
     ui()
     
